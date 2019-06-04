@@ -7,10 +7,12 @@ package ec.edu.ups.vista;
 
 import ec.edu.ups.excepciones.ApellidoIncorrectoException;
 import ec.edu.ups.excepciones.CedulaIncorrectaException;
+import ec.edu.ups.excepciones.CeldaVaciaException;
 import ec.edu.ups.excepciones.EdadIncorrectaException;
 import ec.edu.ups.excepciones.LongitudFueraDeRangoException;
 import ec.edu.ups.excepciones.NombreIncorrectoException;
 import ec.edu.ups.modelo.Persona;
+import java.util.InputMismatchException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -147,31 +149,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         Persona persona=new Persona();
         try {
             persona.setNombre(txtNombre.getText());
-        } catch (LongitudFueraDeRangoException | NombreIncorrectoException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        } 
-        try {
             persona.setApellido(txtApellido.getText());
-        } catch (LongitudFueraDeRangoException | ApellidoIncorrectoException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
-        try {
             persona.setCedula(txtCedula.getText());
+            persona.setEdad(Integer.parseInt(txtEdad.getText()));
+        } catch (LongitudFueraDeRangoException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (ApellidoIncorrectoException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (NombreIncorrectoException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         } catch (CedulaIncorrectaException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
-        } catch (StringIndexOutOfBoundsException ex){
-            JOptionPane.showMessageDialog(this, "El campo de la cedula esta vacio");
-        }
-        try {
-            persona.setEdad(Integer.parseInt(txtEdad.getText()));
         } catch (EdadIncorrectaException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (InputMismatchException ex){
+            JOptionPane.showMessageDialog(this, "Valor ingresado en Edad debe ser numerico");
+        } catch (CeldaVaciaException ex){
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         } catch (NumberFormatException ex){
-            JOptionPane.showMessageDialog(this, "El campo de edad esta vacio");
+            JOptionPane.showMessageDialog(this, "Valor ingresado en Edad debe ser numerico");
         }
-        
-        
-        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEdadActionPerformed

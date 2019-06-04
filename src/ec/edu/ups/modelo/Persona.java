@@ -7,6 +7,7 @@ package ec.edu.ups.modelo;
 
 import ec.edu.ups.excepciones.ApellidoIncorrectoException;
 import ec.edu.ups.excepciones.CedulaIncorrectaException;
+import ec.edu.ups.excepciones.CeldaVaciaException;
 import ec.edu.ups.excepciones.EdadIncorrectaException;
 import ec.edu.ups.excepciones.LongitudFueraDeRangoException;
 import ec.edu.ups.excepciones.NombreIncorrectoException;
@@ -36,11 +37,15 @@ public class Persona {
         return cedula;
     }
 
-    public void setCedula(String cedula) throws CedulaIncorrectaException {
-        if (validar(cedula)) {
-            this.cedula = cedula;
-        } else {
-            throw new CedulaIncorrectaException();
+    public void setCedula(String cedula) throws CedulaIncorrectaException, CeldaVaciaException {
+        if (cedula.equals("")) {
+            throw new CeldaVaciaException();
+        }else {
+            if (validar(cedula)) {
+                this.cedula = cedula;
+            } else {
+                throw new CedulaIncorrectaException();
+            }
         }
 
     }
@@ -65,7 +70,7 @@ public class Persona {
         return apellido;
     }
 
-    public void setApellido(String apellido) throws LongitudFueraDeRangoException, ApellidoIncorrectoException{
+    public void setApellido(String apellido) throws LongitudFueraDeRangoException, ApellidoIncorrectoException {
         if (apellido.length() >= 20 && apellido.length() <= 50) {
             if (apellido.contains(" ")) {
                 this.apellido = apellido;
@@ -81,7 +86,7 @@ public class Persona {
         return edad;
     }
 
-    public void setEdad(int edad) throws EdadIncorrectaException{
+    public void setEdad(int edad) throws EdadIncorrectaException {
         if (edad >= 20 && edad <= 35) {
             this.edad = edad;
         } else {
